@@ -2,6 +2,12 @@ clc;
 clear all;
 close all;
 %this is actually important
+target_dir= '/Users/rebeccawilder/Desktop/first-year-project';
+current_dir= pwd;
+
+if ~strcmp(current_dir, target_dir)
+    cd(target_dir)
+end
 addpath(genpath('/Users/rebeccawilder/Desktop/CMR/'))
 if ~strcmp(pwd, '/Users/rebeccawilder/Desktop/CMR/')
     cd ('/Users/rebeccawilder/Desktop/CMR/')
@@ -91,7 +97,7 @@ end
     
 all_data= all_data(~cellfun('isempty', all_data));
 all_data= cell2mat(all_data);
-
+%% Saving Output
 %name file something similar to output function
 %if statement for if file exists warning about over-writing if it does
 %already exist
@@ -101,9 +107,6 @@ if strcmp(user_input, 'save')
     savefile= [savefile, '.csv'];
     dlmwrite(savefile, all_data)
 end
-%%
-%write a matlab script to calculate lag crp
-%lag crp corresspond to lag of near by serial positions
 
 
 
