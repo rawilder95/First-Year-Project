@@ -6,7 +6,7 @@ real_transitions= [];
 p_transitions= []; %possible positive
 n_transitions= [];% posible negative
 beenrecalled= [];
-LL= 8
+LL= 8; %suppressing output
 
 for idx= 1:LL-1
     %Matches the website sample
