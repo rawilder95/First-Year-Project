@@ -106,13 +106,13 @@ for subj = 1:length(nsubj)
             ifr_itemnos= reshape(ifr_itemnos', numel(ifr_itemnos),1);
             ifr_itemnos= ifr_itemnos(~isnan(ifr_itemnos));
             
-            %Find out which ifr lags were ffr
+            %Find out if 
             ffr_idx= data.ffr.subject== nsubj(subj) & data.ffr.session== ses;
             ffr_itemnos= data.ffr.rec_itemnos(ffr_idx,:);
             ffr_lag= ismember(ifr_itemnos, ffr_itemnos);
-         
+          
                 
-            all_data{subj, ses}= [ifr_subj, ifr_ses, ifr_list, ifr_itemnos, ifr_rt, ifr_sp, ifr_op, ifr_lag, ffr_lag];
+            all_data{subj, ses}= [ifr_subj, ifr_ses, ifr_list, ifr_itemnos, ifr_rt, ifr_sp, ifr_op, ifr_lag];
             
             %each subj-ses combination should have 141 indices to start,
             %however, with nans 
