@@ -70,7 +70,7 @@ for subj = 1:length(nsubj)
             ifr_lag= [];
             %Set up lag col (actual lag spacing)
             for i = 1:length(recall(1,:))
-                ifr_lag(:,i)= recall(:,i)+i-1;
+                ifr_lag(:,i)= LL-recall(:,i)+i-1;
             end 
             ifr_lag(isnan(recall))=nan;
             ifr_lag= reshape(ifr_lag', numel(ifr_lag),1);
