@@ -1,5 +1,5 @@
 clc;
-clear all;
+clear;
 close all;
 target_dir= '/Users/rebeccawilder/First-Year-Project';
 current_dir= pwd;
@@ -125,30 +125,67 @@ close all
    %probability of final free recall as a function of response times. This
    %looks at it in context of IFR not FFR. Look into this. 
    rt_pfr= cell2mat(rt_pfr);
-   pfr= zeros(size(rt_pfr));
-   pfr(~isnan(rt_pfr))=1;
-   rt_pfr= rt_pfr/1000;
-   rt_pfr= nanmean(rt_pfr)
-   pfr1= mean(pfr);
-   pfr1(pfr1<=0)= nan;
-   
-   plot(pfr1, '-o')
-
-   xticklabels(round(rt_pfr, 1))
-   xlabel('Elapsed Recall Time in Seconds')
-   ylabel('Probability of Final Free Recall')
-   title('Probability of Final Free Recall as a Function of Recall Time')
+%    pfr= zeros(size(rt_pfr));
+%    pfr(~isnan(rt_pfr))=1;
+%    rt_pfr= rt_pfr/1000;
+%    rt_pfr= nanmean(rt_pfr)
+%    pfr1= mean(pfr);
+%    pfr1(pfr1<=0)= nan;
+%    
+%    plot(pfr1, '-o')
+% 
+%    xticklabels(round(rt_pfr, 1))
+%    xlabel('Elapsed Recall Time in Seconds')
+%    ylabel('Probability of Final Free Recall')
+%    title('Probability of Final Free Recall as a Function of Recall Time')
   
 
 
+%% Debugging to see why PFR values so low
+% times= data.times;
+% pfr= zeros(size(times));
+% 
+% rec_itemnos= data.rec_itemnos;
+% ffr_itemnos= data.ffr.rec_itemnos;
+% 
+% ffr_mask= data.ffr.recalled;
+% ffr_itemnos(~ffr_mask)= nan;
+% rec_itemnos(rec_itemnos<1)= nan;
+% rec_itemnos(~ffr_mask)= nan;
+% 
+% rec_itemnos(~ismember(rec_itemnos, ffr_itemnos) & ~isnan(rec_itemnos))= nan;
+% times(isnan(rec_itemnos))= nan;
+% 
+% pfr(~isnan(rec_itemnos))= 1; 
+% pfr= nanmean(pfr);
+% times= nanmean(times);
+% times(isnan(times))=0;
+% 
+% 
+% close all;
+%    
+%    plot(pfr(1:20))
+%    xlim([1 20])
+pfr= [];
+times= [];
+rec_itemnos= [];
+ffr_itemnos= [];
+for subj= 1:length(nsubj)
+    for ses= 1:length(unique(data.session))
+        ifr_idx= data.subject== nsubj(subj) & data.session== ses;
+        times{subj,ses}= data.times(ifr_idx,:);
+        ffr_idx= data.ffr.subject== nsubj(subj) & data.ffr.session== ses;
+        pfr_idx= data.ffr.sp(ffr_idx,:);
+        pfr_idx(pfr_idx>=1)=1;
+        pfr{subj,ses}= pfr_idx;
+        rec_itemnos{subj,ses}= data.rec_itemnos;
+        ffr_itemnos{subj,ses}= data.ffr.rec_itemnos;
+        
+    end 
+end 
+pfr= pfr(~cellfun('isempty', pfr));
+pfr= cell2mat(pfr);
+times= times(~cellfun('isempty', times));
 
+mean(pfr)
 
- 
-   
-   
-   
-   
-
-
-    
-    
